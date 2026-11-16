@@ -1,8 +1,63 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anastasia Wikibot</title>
+    <style>
+        body {
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+    </style>
     
-  </head>
-  <body>
-    <h1> Test Github - Anacleta chat</h1>
-  </body>
+    <link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+</head>
+<body>
+
+    <script type="module">
+        try {
+            const module = await import('https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js');
+            const createChat = module.createChat;
+            
+            createChat({
+                webhookUrl: 'https://acoloma.app.n8n.cloud/webhook/4961380d-d0f6-44a8-91d4-4478f1e4dd22/chat',
+                mode: 'window',
+                showWelcomeScreen: false,
+                loadPreviousSession: true,
+                initialMessages: [
+                    '¡Hola! 👋', 
+                    'Me llamo Anastasia, soy tu asistente.'
+                ],
+                i18n: { 
+                    en: { 
+                        title: 'Anastasia Wikibot', 
+                        subtitle: 'Empieza una conversación...',
+                        footer: '', 
+                        getStarted: 'Nueva conversación',
+                        inputPlaceholder: 'Escribe tu pregunta..' 
+                    } 
+                },
+            });
+        } catch (error) {
+            console.error("Error al cargar o conectar el widget de n8n:", error);
+            
+            document.body.innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; text-align: center; padding: 20px;">
+                    <h2 style="color: #ef4444; margin-bottom: 10px;">Error de Conexión</h2>
+                    <p style="color: #4b5563; max-width: 400px; line-height: 1.5;">
+                        No se pudo conectar con el bot. Por favor revisa lo siguiente en tu entorno de n8n:
+                    </p>
+                    <ul style="text-align: left; color: #4b5563; line-height: 1.6; margin-top: 15px;">
+                        <li>Asegúrate de que tu flujo en n8n esté <strong>Activado (Active)</strong>.</li>
+                        <li>Verifica que la URL del Webhook sea correcta.</li>
+                        <li>Si estás probando, intenta cambiar <code>/webhook/</code> a <code>/webhook-test/</code> y darle a "Listen for test event" en n8n.</li>
+                    </ul>
+                </div>
+            `;
+        }
+    </script>
+</body>
 </html>
